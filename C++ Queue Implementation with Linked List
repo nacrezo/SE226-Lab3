@@ -1,0 +1,95 @@
+#include <iostream>
+#include <new>
+
+using namespace std;
+
+class Node {
+public:
+       int data;
+       Node *next;
+
+       Node(int d, Node *n)
+       {data=d; next=n;}
+};
+
+class Queue {
+private:
+    Node *back;
+    Node *front;
+
+public:
+    Queue() {
+    back=nullptr;
+    front=nullptr;
+
+    }
+
+    bool isEmpty() {
+        return back == nullptr && front == nullptr;
+    }
+
+    void enqueue(int input) {
+
+            if(isEmpty()){
+            front=new Node(input, nullptr);
+            back=front;
+            }
+
+            else {
+            back->next=new Node(input, nullptr);
+            back=back->next;
+            }
+        }
+
+    void dequeue() {
+        if(!isEmpty()) {
+            if(front==back) {
+            front=nullptr;
+            back=nullptr;
+            }
+
+            else {
+                front = front->next;
+            }
+        }
+    }
+
+    void print() {
+        Node *p;
+        for(p=front; p!=nullptr; p=p->next) {
+        cout<<p->data<<" ";
+        } cout << endl;
+    }
+
+    int size() {
+        Node *p;
+        int counter = 0;
+        for(p=front; p!=nullptr; p=p->next) {
+        counter++;
+        }
+
+        return counter;
+    }
+
+    int top() {
+        return front->data;
+    }
+
+};
+
+int main()
+{
+    Queue *q = new Queue();
+    q->enqueue(1);
+    q->enqueue(2);
+    q->enqueue(3);
+    q->print();
+    cout<<q->size();
+    cout<<endl;
+    cout<<q->top();
+    cout<<endl;
+    q->dequeue();
+    q->print();
+
+    return 0;
+}
